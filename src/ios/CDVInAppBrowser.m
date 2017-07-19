@@ -63,6 +63,7 @@
         NSLog(@"IAB.close() called but it was already closed.");
         return;
     }
+
     // Things are cleaned up in browserExit.
     [self.inAppBrowserViewController close];
 }
@@ -83,6 +84,9 @@
     NSString* url = [command argumentAtIndex:0];
     NSString* target = [command argumentAtIndex:1 withDefault:kInAppBrowserTargetSelf];
     NSString* options = [command argumentAtIndex:2 withDefault:@"" andClass:[NSString class]];
+	
+	NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:0 diskCapacity:0 diskPath:nil];
+	[NSURLCache setSharedURLCache:sharedCache];
 
     self.callbackId = command.callbackId;
 
